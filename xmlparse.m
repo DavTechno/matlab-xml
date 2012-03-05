@@ -23,12 +23,12 @@ function a = xmlparse(xmlfile)
 %    note : [1x1 struct]
 %  >> tree.note
 %  ans =
-%       to : 'BoB'
+%       to : 'Bob'
 %     from : 'Sally'
 %  subject : 'Hey there'
 %     body : 'Yo, yo! What's up?'
 %
-%See also: getnode
+%See also: xmlread
 
 % Open and read the file into a MATLAB cell array.
 fid = fopen(xmlfile,'r');
@@ -36,7 +36,6 @@ tline = fgetl(fid);
 xmltext = fscanf(fid,'%c');
 xmltext(xmltext==10)=[];
 fclose(fid);
-disp(['reading an xml file: ' tline]);
 a = getnode(xmltext);
 
 end
@@ -61,6 +60,12 @@ if ~isempty(strfind(xmltext,'<'))
         ind1 = strfind(xmltext,'<'); ind1 = ind1(1);
         ind2 = strfind(xmltext,'>'); ind2 = ind2(1);
         tagname = xmltext(ind1+1:ind2-1);
+        if strfind(tagname,' ')
+            % Dump the extra stuff.
+            % TODO: should remember the extra stuff and do something with it?
+            ind = strfind(tagname,' ');
+            tagname = tagname(1:ind-1)
+        end
         tlen = length(tagname);
         
         % Locate the beginning and end of the content in that tag.

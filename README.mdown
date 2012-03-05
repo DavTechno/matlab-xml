@@ -1,0 +1,10 @@
+xmlparse for MATLAB
+===================
+
+This is a ridiculously simple and inefficient XML parser for MATLAB. I had the
+need to read in a particular xml file one day and noticed that it had a nice 
+trait: the parse tree can be represented by a MATLAB struct, where each node
+can be represented by a field and its content by either subfields (if the 
+content is a node) or by a value of the content is data.
+
+This file, xmlparse, does exactly that.
